@@ -23,6 +23,12 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+# 前言
+初学 Vue 知道了它的使用相关语法, 包括它相关的技术栈 Vue + Vuex + VueRouter 和它的组件库 VueElement ，但是现在主要缺乏使用 vue 搭建一个完整的项目经验，我也在网上查找了一些相关的项目，但是都是比较不完整的，这是我写第一个大型外卖项目，仿照的是 github 上面比较热门的开源项目，你也可以访问它的 github 网站查看更多的有趣的开源项目 https://github.com/bailicangdu 
+这个项目只是对の了吗，项目的一个仿写, 并不支持购买商品
+
+__注：此项目纯属个人瞎搞，正常下单请选择饿了么官方客户端。__
+
 
 
 
