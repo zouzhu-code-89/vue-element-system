@@ -1,0 +1,68 @@
+/**
+    @descript: mixin.scss
+
+    @author: zouzhuqcom@163.com
+    @time: 2020.04.01  15:00
+**/
+$blue:#3190e8;
+$bc:#e4e4e4;
+$fc:#fff;
+
+
+@mixin backgroundImg($url){                 // 背景图片的地址和大小
+    background-image: url($url);
+    background-repeat: no-repeat;
+    background-color: 100% 100%;
+}
+
+@mixin borderReaius($redius){               // 边框的圆角弧度
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    -o-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin allcover{                            // 定位全屏
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+@mixin center{                              // 定位上下左右居中
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin top-buttom-center{           // 定义上下居中
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@mixin cl{                                  // 定义左右居中
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@mixin width-height($width, $height){       // 定义宽高
+    width: $width;
+    height: $height;
+}
+
+@mixin font($size, $line-height, $family: 'Microsoft YaHei'){       // 字体大小, 行高, 字体
+    font: #{$size}/#{$line-height} $family;
+}
+
+@mixin font-size-color($size, $color){      // 字体大小, 颜色
+    font-size: $size;
+    color: $color;
+}
+
+@mixin fj($type: space-between){            // flex 布局和 子元素 对其方式
+	display: flex;
+	justify-content: $type;
+}
