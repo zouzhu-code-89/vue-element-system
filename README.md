@@ -1,16 +1,16 @@
 # vue-element-system
 
-## Project setup
+## 项目下载对应的包依赖
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 项目运行
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 项目构建
 ```
 npm run build
 ```
