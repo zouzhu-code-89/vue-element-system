@@ -56,9 +56,9 @@
                 </div>
             </section>
             <!-- 
-                3.验证码 @param {string} codeNumber 绑定当前输入的验证码
-                        @param {string} captchaCodeImg 验证码图片地址
-                        @func getCaptchaCode 更新新的验证码
+                3.图形验证码 @param {string} codeNumber 绑定当前输入的验证码
+                            @param {string} captchaCodeImg 验证码图片地址
+                            @func getCaptchaCode 更新新的验证码
              -->
             <section class="input_container captcha_code_container">
                 <input type="text" placeholder="验证码" maxlength="4" v-model="codeNumber">
@@ -94,7 +94,9 @@ import HeadTop from "@/components/header/HeadTop"
 import AlertTip from "@/components/common/AlertTip"
 import {localapi, proapi, imgBaseUrl} from '@/config/env'
 import {mapState, mapMutations} from 'vuex'
-import { mobileCode, checkExsis, sendLogin, getcaptchas, accountLogin } from '../../services/getData';
+//import { mobileCode, checkExsis, sendLogin, getcaptchas, accountLogin } from '../../services/getData';
+
+import { getcaptchas,accountLogin } from '../../services/getData';
 
 export default {
     name: "login",
@@ -135,6 +137,9 @@ export default {
         }
     },
     methods: {
+        ...mapMutations([
+            'RECORD_USERINFO',
+        ]),
         changeLoginWay(){ 
             /**
              * 改变登录的方式
@@ -150,49 +155,60 @@ export default {
         async getCaptchaCode(){ 
             /**
              * 获取图形验证码，线上环境使用固定的图片，生产环境使用真实的验证码
-             *  */                          
+             **/
             let res = await getcaptchas();
             this.captchaCodeImg = res.code;
         },
-        async getVerifyCode(){
-            /**
-             * 获取短信验证码
-             */
-            if(this.rightPhoneNumber){              // 1.判断是否是有效的电话号码
-                console.log(".... 开始获取验证码");
-                this.computedTime = 30;             // 2.倒计时 30 秒
-                this.timer = setInterval(()=>{
-                    this.computedTime--;
-                    if(this.computedTime == 0){
-                        clearInterval(this.timer);
-                    }
-                },1000);
-            }
-            // 3.判断用户是否存在
-            let exsis = await checkExsis(this.phoneNumber, "mobile");  
-            if(exsis.message){
-                this.showAlert = true;
-                this.alertText = exsis.message;
-                return;
-            }else if(!exsis.is_exists){
-                this.showAlert = true;
-                this.alertText = '您输入的手机号尚未绑定';
-                return;
-            }
-            // 4.发送短信验证码
-            let res = await mobileCode(this.phoneNumber);
-            if(res.message){
-                this.showAlert = true;
-                this.alertText = res.message;
-                return;
-            }
-            this.validate_token = res.validate_token;
-        },
+        // async getVerifyCode(){
+        //     /**
+        //      * 获取短信验证码
+        //      */
+        //     if(this.rightPhoneNumber){              // 1.判断是否是有效的电话号码
+        //         console.log(".... 开始获取验证码");
+        //         this.computedTime = 30;             // 2.倒计时 30 秒
+        //         this.timer = setInterval(()=>{
+        //             this.computedTime--;
+        //             if(this.computedTime == 0){
+        //                 clearInterval(this.timer);
+        //             }
+        //         },1000);
+        //     }
+        //     // 3.判断用户是否存在
+        //     let exsis = await checkExsis(this.phoneNumber, "mobile");  
+        //     if(exsis.message){
+        //         this.showAlert = true;
+        //         this.alertText = exsis.message;
+        //         return;
+        //     }else if(!exsis.is_exists){
+        //         this.showAlert = true;
+        //         this.alertText = '您输入的手机号尚未绑定';
+        //         return;
+        //     }
+        //     // 4.发送短信验证码
+        //     let res = await mobileCode(this.phoneNumber);
+        //     if(res.message){
+        //         this.showAlert = true;
+        //         this.alertText = res.message;
+        //         return;
+        //     }
+        //     this.validate_token = res.validate_token;
+        // },
+
+        /**登录函数
+         * @time  2020-04-12 
+        *  @description 用户输入了用户名和密码、验证码点击确认后将触发这个函数、发送登录请求
+        * 
+        *  1.先检查登录的方式是账号密码登录还是短信登陆
+        *  2.检查手机号码和验证码的正则表达式是否正确
+        *  3.发送axios账号登陆请求,检查账号是否存在
+        *  4.登录错误就将错误消息传递给提示组件
+        *  5.登录成功获取用户信息，保存到Store，更新Store的登陆状态
+        *  6.返回到首页
+        */
         async mobileLogin(){                                
-            /**
-             * 发送登录信息
-             */
+            // 判断登录方式
             if(this.loginWay){
+                // 检测手机号码和验证码格式是否正确,错误则显示错误提示框showAlert
                 if(!this.rightPhoneNumber){
                     this.showAlert = true;
                     this.alertText = '手机号码不正确';
@@ -202,8 +218,8 @@ export default {
                     this.alertText = '短信验证码不正确';
                     return;
                 }
-                // 上面检查没问题了，我们就可以发送登录请求了，手机验证码登录
-                this.userInfo = await sengLogin(this.mobileCode, this.phoneNumber, this.validate_token);
+                // 手机验证码登录请求
+                //this.userInfo = await sengLogin(this.mobileCode, this.phoneNumber, this.validate_token);
             }else{
                 if(!this.userAccount){
                     this.showAlert = true;
@@ -218,16 +234,20 @@ export default {
                     this.alertText = '请输入验证码';
                     return;
                 }
-                // 上面检查没问题了，我们就可以发送登录请求了，账号密码登录
+                // 账号密码登录请求
                 this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber);
             }
-            // 判断 user_id 是否有为空，如果为空说明登录失败，message 保存的是服务器失败原因的消息，登录成功后返回上一页
+            console.log(this.userInfo);
+            // 判断是否查询到该用户USER_ID,如果没有查到就将返回的错误消息传递给提示框组件
             if(!this.userInfo.user_id){
                 this.showAlert = true;
                 this.alertText = this.userInfo.message;
+                // 如果登录失败则重新刷新验证码
                 if(!this.loginWay) this.getCaptchaCode();
             }else{
+                // 登录成功就将用户信息保存到Store，并由mutation将userinfo保存到localstorage
                 this.RECORD_USERINFO(this.userInfo);
+                // 返回到上一个页面首页
                 this.$router.go(-1);
             }
         },

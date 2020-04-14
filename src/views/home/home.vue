@@ -59,7 +59,7 @@
 
 
 <script>
-import { cityGuess, hostcity, groupcity } from '@/services/getData'
+// import { cityGuess, hostcity, groupcity } from '@/services/getData'
 import HeadTop from '@/components/header/HeadTop'
 
 export default {

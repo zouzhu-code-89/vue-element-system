@@ -1,5 +1,5 @@
 const base = {
-    baseUrl: "http://localtion:9090"
+    baseUrl: "http://127.0.0.1:3000"
 }
 
 export default base;

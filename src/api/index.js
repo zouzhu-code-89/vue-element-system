@@ -3,9 +3,7 @@
  * @author zouzhuQcom@163.com
  * @time   2020-04-08
  */
-import todosApi from "./todos";
+const todosApi = require("./todos");
 
 
-export default {
-    todosApi
-};
+module.exports = todosApi;

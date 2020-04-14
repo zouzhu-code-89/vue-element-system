@@ -4,7 +4,7 @@
  * @author zouzhuQcom@163.com
  * @time   2020.04.08
  */
-import axios from "axios"
+const axios = require("axios");
 
 
 
@@ -12,16 +12,18 @@ const initAxios = axios.create({          // 初始化一个 axios 实例
     timeout: 1000 * 12
 });
 initAxios.defaults.headers.post['Content-Type'] = 'application/json';       // 对实例的响应头进行配置
-
+initAxios.defaults.withCredentials = true;
 
 /**
  * @description 实例响应拦截器
  */
-initAxios.interceptors.response.use(           
+initAxios.interceptors.response.use(        
     function(res){                      // 1.正常拦截
-        res.status == 200 ? Promise.resolve(res) : Promise.reject(res); 
+        console.log("数据相应拦截成功");   
+        return res.status == 200 ? Promise.resolve(res) : Promise.reject(res); 
     },
     function(error){                    // 2.错误拦截
+        console.log("数据相应拦截成功，异常");   
         const {response} = error;
         if (response) {
             errorHandler(response.status, response.data.message);
@@ -52,4 +54,4 @@ const errorHandler = (statusCode, message) => {
 
 
 
-export default initAxios;
+module.exports = initAxios;
