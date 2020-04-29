@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "chalk": "^4.0.0",
+    "config-lite": "^3.0.0",
     "core-js": "^3.6.4",
     "element-ui": "^2.4.5",
+    "mongoose": "^5.9.9",
     "vue": "^2.6.11",
     "vue-html": "^1.0.0",
     "vue-html-loader": "^1.2.4",

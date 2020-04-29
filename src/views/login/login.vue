@@ -94,9 +94,8 @@ import HeadTop from "@/components/header/HeadTop"
 import AlertTip from "@/components/common/AlertTip"
 import {localapi, proapi, imgBaseUrl} from '@/config/env'
 import {mapState, mapMutations} from 'vuex'
-//import { mobileCode, checkExsis, sendLogin, getcaptchas, accountLogin } from '../../services/getData';
+import { mobileCode, checkExsis, sendLogin, getcaptchas, accountLogin } from '@/services/getData';
 
-import { getcaptchas,accountLogin } from '../../services/getData';
 
 export default {
     name: "login",

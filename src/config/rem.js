@@ -1,5 +1,5 @@
-/**
- * @description init rem number
+/**初始化REM单位
+ * @description 项目启动的时候、我们就应该初始化这个 rem
  * 
  * @author zouzhuqcom@163.com（邹柱）
  * @time 2020.04.01 21.16

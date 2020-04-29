@@ -1,5 +1,5 @@
 /**
- * @name 全局状态管理
+ * @name 全局状态管理 Store
  * @description vuex store project manager
  * @author zouzhuqcom@163.com
  */
@@ -7,7 +7,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import mutations from './mutations'
 import actions from './action'
-// import getters from './getters'
+import getters from './getter'
 
 Vue.use(Vuex)
 
@@ -42,7 +42,7 @@ const state = {
 
 export default new Vuex.Store({
   state,
-  // getters,
+  getters,
   actions,
   mutations,
 })
