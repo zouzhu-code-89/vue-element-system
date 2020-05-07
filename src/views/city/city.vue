@@ -40,7 +40,7 @@
 
 <script>
     import HeadTop from '@/components/header/HeadTop'
-    import {currentcity, searchplace} from '@/services/getData'
+    import {currentCity, searchplace} from '@/services/getData'
     import {getStore, setStore, removeStore} from '@/config/mUtils'
 
     export default {
@@ -60,7 +60,7 @@
             // 通过路径获取城市 ID
             this.cityid = this.$route.params.cityid;
             // 通过 getData 发起数据请求、获取当前城市名字
-            currentcity(this.cityid).then(res => {
+            currentCity(this.cityid).then(res => {
                 this.cityname = res.name;
             })
             // 获取缓存的搜索记录

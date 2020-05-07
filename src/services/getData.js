@@ -7,43 +7,64 @@
 import api from "../api/index";
 
 
+
 /*===================== 获取地域城市相关数据 ====================*/
+
 /**
- * 获取定位获取当前所在城市
+ * @description 获取定位获取当前所在城市
+ * @return {object} 获取定位的城市信息 CityInfo
  */
-export const cityGuess = () => api('/v1/cities/axios', {
-    type: 'guess'
+export const cityGuess = async () => await api('/v1/cities', {
+	type: 'guess'
 });
 
-// /**
-//  * 获取首页热门城市
-//  */
-// export const hostcity = () => fetch('/v1/cities', {
-//   type: 'host'
-// });
 
-// /**
-//  * 获取首页所有城市
-//  */
-// export const groupcity = () => fetch('/v1/cities', {
-//   type: 'group'
-// });
+/**
+ * @description 获取首页热门城市信息
+ * @returns {[Object]} 热门城市信息数组[{CityInfo}]
+ */
+export const hostCity = async () => await api('/v1/cities', {
+  type: 'hot' 
+});
 
 
 /**
- * 获取当前所在城市
+ * @description 获取所有城市信息
+ * @return {[Object]} 全部的城市信息[{CityInfo1}, {CityInfo1},...a]
  */
-export const currentcity = number => api('/v1/cities/' + number);
+export const groupCity = () => api('/v1/cities', {
+  type: 'group'
+});
+
 
 /**
- * 获取搜索地址
+ * @description 根据当前的城市ID (id:1)ShangHai 获取城市信息 CityInfo.
+ * @param {*} cityid 当前城市ID
+ * @return {Object} 返回当前城市信息对象 CityInfo
  */
+export const currentCity = cityid => api('/v1/cities/' + cityid);
 
+
+/**
+ * @description 获取搜索的详细地址
+ * @param {*} cityid 当前用户所在城市的ID (id:1)ShangHai
+ * @param {*} value  用户输入的地点
+ * @return {[string]} 返回的是一个地点集合，比如我们搜索学校，就会返回武汉附近所有的学校
+ */
 export const searchplace = (cityid, value) => api('/v1/pois', {
 	type: 'search',
 	city_id: cityid,
 	keyword: value
 });
+
+
+
+
+
+
+
+
+
 
 
 /*========================= 账号登陆区域 ======================*/
@@ -166,15 +187,6 @@ export const accountLogin = (username, password, captcha_code) => api('/v2/login
 // export const currentcity = number => fetch('/v1/cities/' + number);
 
 
-// /**
-//  * 获取搜索地址
-//  */
-
-// export const searchplace = (cityid, value) => fetch('/v1/pois', {
-// 	type: 'search',
-// 	city_id: cityid,
-// 	keyword: value
-// });
 
 
 /*========================= msite 页面相关资源的获取 ======================*/

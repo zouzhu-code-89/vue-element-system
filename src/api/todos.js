@@ -17,7 +17,6 @@ const httpAxios = require("./http");
 const todos = (url = '', data = {}, type = "GET") => {
     return new Promise(function(resolve, reject){
                 url = base.baseUrl + url;
-                console.log(`${type}请求到来 .... ${url}`);
                 // GET请求
                 if (type == "GET"){
                     let param = '';
@@ -26,18 +25,19 @@ const todos = (url = '', data = {}, type = "GET") => {
                 });
                 if (param !== '') {
                     param = param.substr(0, param.lastIndexOf('&'));
-                    url = base.baseUrl + url + '?' + param;
+                    url = url + '?' + param;
                 }
-                console.log(url);
+                console.log("request url: ", url);
                 httpAxios.get(url).then(function(response){
-                    console.log("服务器响应了");
+                    console.log(response.data);
+                    resolve(response.data);
                 });
             }
     
             // POST请求
             if (type == "POST") {
                 httpAxios.post(url, data).then(function(response){
-                    console.log(response);
+                    console.log(response.data);
                     resolve(response.data);
                 });
             }

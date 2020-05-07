@@ -21,7 +21,7 @@
                 2.如果点击这个城市数据链接 router-link => /city/:cityId  跳转到输入该城市的详细地址
             -->
             <router-link :to="'/city/' + guessCityid" class="guess_city">
-                <span>荆州</span>  <!-- 定位到的当前城市 {{guessCity}}-->
+                <span>{{ guessCity }}</span>  <!-- 定位到的当前城市 {{guessCity}}-->
                 <i class="el-icon-arrow-right arrow_right"></i>  <!-- svg 图标箭头 -->
             </router-link>
         </nav>
@@ -30,10 +30,8 @@
         <section id="hot_city_container">
             <h4 class="city_title">热门城市</h4>
             <ul class="citylistul clear">  <!-- 同样跳转到输入该城市的详细地址-->
-                <li>武汉</li><li>荆州</li><li>北京</li><li>武汉</li>
-                <li>武汉</li><li>荆州</li><li>北京</li><li>武汉</li>
-                <router-link tag="li" v-for="item in hotcity" :to="'/city/' + item.id" :key="item.id">
-                    武汉<!-- {{item.name}} -->
+                <router-link  tag="li" v-for="item in hotcity" :to="'/city/' + item.id" :key="item.id">
+                    {{item.name}}
                 </router-link>
             </ul>
         </section>
@@ -59,7 +57,7 @@
 
 
 <script>
-// import { cityGuess, hostcity, groupcity } from '@/services/getData'
+import { cityGuess, hostCity, groupCity } from '@/services/getData'
 import HeadTop from '@/components/header/HeadTop'
 
 export default {
@@ -79,17 +77,17 @@ export default {
   mounted () {
     // 获取当前城市
     cityGuess().then(res => {
-      this.guessCity = res.name
-      this.guessCityid = res.id
-    })
+      this.guessCity = res.name;
+      this.guessCityid = res.id;
+    });
 
     // 获取热门城市
-    hostcity().then(res => {
-      this.hotcity = res
-    })
+    hostCity().then(res => {
+      this.hotcity = res;
+    });
 
     // 获取所有城市
-    groupcity().then(res => {
+    groupCity().then(res => {
       this.groupcity = res
     })
   },
